@@ -7,7 +7,6 @@ services:
     volumes:
       - /data/teamcity
   agent:
-    #image: ariya/centos7-teamcity-agent
     image: local/c7-teamcity-agent
     ports:
       - "9090:9090"
@@ -22,13 +21,7 @@ services:
       - /home/teamcity
       - /var/run/docker.sock:/var/run/docker.sock
       - /bin/docker:/bin/docker
-      #- /usr/lib64/libsystemd.so.0:/usr/lib64/libsystemd.so.0
-      #- /usr/lib64/libdw.so.1:/usr/lib64/libdw.so.1
-      #- /lib64/libsystemd-journal.so.0:/usr/lib/libsystemd-journal.so.0
-      #- /lib64/libsystemd-id128.so.0:/usr/lib/libsystemd-id128.so.0
-      #- /lib64/libdevmapper.so.1.02:/usr/lib/libdevmapper.so.1.02
-      #- /lib64/libgcrypt.so.11:/usr/lib/libgcrypt.so.11
-      #- /lib64/libdw.so.1:/usr/lib/libdw.so.1
+    # oh yes, we need to make a delay while teamcity server starts
     command: sudo -u teamcity -s -- sh -c "echo starting; sleep 35; echo waiting; sleep 35; echo again; sleep 35; TEAMCITY_SERVER=http://server:8111 bash /setup-agent.sh run"
     
     
